@@ -100,6 +100,10 @@ i2b2.CRC.view.QT.showRun = function() {
             // populate the results list based on...
             // ==> i2b2.CRC.model.resultTypes
             // ==> i2b2.CRC.model.selectedResultTypes
+	    document.getElementById("DataRequestDiv").style.display = "none";
+            document.getElementById("DataExportDiv").style.display = "none";
+
+
             let checkContainer = $("#crcModal .ResultTypes");
             for (let code in i2b2.CRC.model.resultTypes) {
                 let descriptions = i2b2.CRC.model.resultTypes[code];
@@ -109,6 +113,25 @@ i2b2.CRC.view.QT.showRun = function() {
                     $('<div id="crcDlgResultOutput' + code + '"><input type="checkbox" class="chkQueryType" name="queryType" value="' + code + '"' + checked + '> ' + description + '</div>').appendTo(checkContainer);
                 });
             }
+	     let requestContainer = $("#crcModal .RequestTypes");
+            for (let code in i2b2.CRC.model.requestTypes) {
+		document.getElementById("DataRequestDiv").style.display = "";
+                let descriptions = i2b2.CRC.model.requestTypes[code];
+                descriptions.forEach(description => {
+                    let checked = '';
+                    $('<div id="crcDlgResultOutput' + code + '"><input type="checkbox" class="chkQueryType" name="queryType" value="' + code + '"' + checked + '> ' + description + '</div>').appendTo(requestContainer);
+                });
+            }
+            let dataExportContainer = $("#crcModal .DataExportTypes");
+            for (let code in i2b2.CRC.model.dataExportTypes) {
+		document.getElementById("DataExportDiv").style.display = "";
+                let descriptions = i2b2.CRC.model.dataExportTypes[code];
+                descriptions.forEach(description => {
+                    let checked = '';
+                    $('<div id="crcDlgResultOutput' + code + '"><input type="checkbox" class="chkQueryType" name="queryType" value="' + code + '"' + checked + '> ' + description + '</div>').appendTo(dataExportContainer);
+                });
+            }
+
             // populate/delete the query run methods
             if (!i2b2.CRC.model.queryExecutionOptions) {
                 // no query execution options, remove input from form
@@ -2521,6 +2544,8 @@ i2b2.events.afterCellInit.add((cell) => {
                 //			errorStatus: string [only with error=true]
                 //			errorMsg: string [only with error=true]
                 cell.model.resultTypes = {};
+		cell.model.requestTypes = {};
+		cell.model.dataExportTypes = {};
 
                 if (results.error){
                     console.log("ERROR: Unable to retrieve result types from server", results.msgResponse);
@@ -2539,7 +2564,17 @@ i2b2.events.afterCellInit.add((cell) => {
                             if (name === "PATIENT_COUNT_XML") {
                                 cell.model.selectedResultTypes.push(name);
                             }
-                        }
+                        } else if (visual_attribute_type === "LR") {
+                            if(cell.model.requestTypes[name] === undefined){
+                                cell.model.requestTypes[name] = [];
+                            }
+                            cell.model.requestTypes[name].push(i2b2.h.getXNodeVal(ps[i1],'description'));
+                        } else if (visual_attribute_type === "LX") {
+                            if(cell.model.dataExportTypes[name] === undefined){
+                                cell.model.dataExportTypes[name] = [];
+                            }
+                            cell.model.dataExportTypes[name].push(i2b2.h.getXNodeVal(ps[i1],'description'));
+                        } 
                     }
                 }
             }

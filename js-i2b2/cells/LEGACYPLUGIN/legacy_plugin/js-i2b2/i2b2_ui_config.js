@@ -20,7 +20,7 @@ i2b2.UI.cfg = {
 	loginPasswordText : "Password:", /* [Default: "Password:"] Text for the password input of the login box */
 	loginDefaultPassword : "demouser", /* [Default: "demouser"] Default text inside the password input */
 	loginHostText : "i2b2 Host:", /* [Default: "i2b2 Host:"] Text for the PM cell dropdown of the login box */
-	obfuscatedDisplayNumber: 3, /* [Default: 3] Display number after plus/minus for obfuscated results.
+	obfuscatedDisplayNumber: 11, /* [Default: 3] Display number after plus/minus for obfuscated results.
 								  Control the real obfuscation value from server in CRC properties. */
 	useFloorThreshold: false, /* [Default: false] If true, any result below floorThresholdNumber shows as 'Less Than {floorThresholdNumber}' */	  
 	floorThresholdNumber: 10, /* [Default: 10] Threshold for low number of results */

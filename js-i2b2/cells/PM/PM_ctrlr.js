@@ -50,7 +50,7 @@ i2b2.PM.doSamlLogin = function(service) {
     // save PM cell's URL and login domain to cookies for later use by proxy server
     let now = new Date();
     now.setTime(now.getTime() + (10 * 60 * 1000)); // give users 10 mins to finish the SAML redirect dance
-    document.cookie = "url="+encodeURIComponent(i2b2.PM.model.url)+"; expires=" + now.toUTCString() + "; SameSite=None; Secure;";
+    //document.cookie = "url="+encodeURIComponent(i2b2.PM.model.url)+"; expires=" + now.toUTCString() + "; SameSite=None; Secure;";
     document.cookie = "domain="+encodeURIComponent(i2b2.PM.model.login_domain)+"; expires=" + now.toUTCString() + "; SameSite=None; Secure;";
 
     const popupCenter = ({url, title, w, h}) => {
@@ -459,7 +459,7 @@ i2b2.PM._processLaunchFramework = function() {
     let roles = i2b2.h.XPath(oXML, "//user/project[@id='"+i2b2.PM.model.login_project+"']/role/text()");
     for (var i = 0; i < roles.length; i++) {
         if (i2b2.PM.model.userRoles.indexOf(roles[i].nodeValue) === -1) i2b2.PM.model.userRoles.push(roles[i].nodeValue);
-        if (roles[i].nodeValue === "DATA_AGG") i2b2.PM.model.isObfuscated = false;
+        if (roles[i].nodeValue === "DATA_PROT") i2b2.PM.model.isObfuscated = false;
     }
 
     // process cell listing

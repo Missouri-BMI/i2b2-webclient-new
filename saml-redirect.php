@@ -8,7 +8,7 @@ $shib_handler = filter_input(INPUT_SERVER, 'AJP_Shib-Handler', FILTER_SANITIZE_S
 
 $scriptFilename = basename($script);
 $path = str_replace($scriptFilename, '', $requestUri);
-$url = (isset($https) && $https === 'on' ? "https" : "http") . "://${hostname}${path}saml-acs.php";
+$url = (isset($https) && $https === 'on' ? "https" : "https") . "://${hostname}${path}saml-acs.php";
 $redir_url = rtrim($url, '/');
 
 header("Location: ${shib_handler}/Login?target=${redir_url}");
